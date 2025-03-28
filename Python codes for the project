@@ -1,0 +1,114 @@
+Python Code Implementation
+1. room.py (Room Class)
+class Room:
+    "Represents a hotel room with booking capabilities."""
+    
+    def __init__(self, room_number, room_type, amenities, price_per_night, is_available=True):
+        self.room_number = room_number
+        self.room_type = room_type
+        self.amenities = amenities
+        self.price_per_night = price_per_night
+        self.is_available = is_available
+
+    def book_room(self):
+        """Marks room as booked if available."""
+        if self.is_available:
+            self.is_available = False
+            return True
+        return False
+
+    def release_room(self):
+        """Releases the room, making it available again."""
+        self.is_available = True
+
+    def __str__(self):
+        return f"Room {self.room_number} - {self.room_type}, ${self.price_per_night}/night"
+
+2. guest.py (Guest Class)
+class Guest:
+    """Represents a hotel guest with personal details and loyalty points."""
+
+    def __init__(self, guest_id, name, email, phone, loyalty_points=0):
+        self.guest_id = guest_id
+        self.name = name
+        self.email = email
+        self.phone = phone
+        self.loyalty_points = loyalty_points
+
+    def register_guest(self):
+        """Registers the guest."""
+        return f"Guest {self.name} registered successfully."
+
+    def view_profile(self):
+        """Displays guest details."""
+        return f"Guest: {self.name}, Email: {self.email}, Phone: {self.phone}, Points: {self.loyalty_points}"
+
+    def __str__(self):
+        return f"Guest {self.name} (ID: {self.guest_id})"
+
+3. booking.py (Booking Class)
+class Booking:
+    """Handles room booking and cancellations."""
+
+    def __init__(self, booking_id, guest, room, check_in_date, check_out_date):
+        self.booking_id = booking_id
+        self.guest = guest
+        self.room = room
+        self.check_in_date = check_in_date
+        self.check_out_date = check_out_date
+
+    def create_booking(self):
+        """Creates a booking if the room is available."""
+        if self.room.book_room():
+            return f"Booking {self.booking_id} confirmed for {self.guest.name} in Room {self.room.room_number}."
+        return "Booking failed. Room is not available."
+
+    def cancel_booking(self):
+        """Cancels the booking and releases the room."""
+        self.room.release_room()
+        return f"Booking {self.booking_id} has been canceled."
+
+    def __str__(self):
+        return f"Booking {self.booking_id}: {self.guest.name} in Room {self.room.room_number}"
+
+4. main.py (Running the System)
+from room import Room
+from guest import Guest
+from booking import Booking
+
+# Creating objects
+room1 = Room(101, "Single", ["Wi-Fi", "TV"], 100)
+guest1 = Guest(1, "John Doe", "john@example.com", "1234567890")
+
+# Making a booking
+booking1 = Booking(1, guest1, room1, "2024-07-01", "2024-07-05")
+print(booking1.create_booking())
+
+# Checking guest profile
+print(guest1.view_profile())
+
+# Cancelling the booking
+print(booking1.cancel_booking())
+
+# Checking room status
+print(f"Is room available? {room1.is_available}")
+
+Step 3: Writing Test Cases (test_cases.py)
+def test_room_booking(self):
+    """Test that a room can be booked successfully."""
+    room = Room(102, "Double", ["Wi-Fi", "AC"], 150)
+    room.book_room()  # Book the room
+    self.assertFalse(room.is_available)  # Check if it's marked as unavailable
+
+def test_guest_registration(self):
+    """Test guest registration."""
+    guest = Guest(2, "Alice Smith", "alice@example.com", "9876543210")
+    self.assertEqual(guest.name, "Alice Smith")
+
+def test_booking_creation(self):
+    """Test that a booking is created successfully."""
+    room = Room(103, "Suite", ["Wi-Fi", "Mini-bar"], 200)
+    guest = Guest(3, "Bob Johnson", "bob@example.com", "1112233445")
+    booking = Booking(2, "2024-07-10", "2024-07-15", [room], guest)
+    self.assertEqual(booking.guest.name, "Bob Johnson")
+if name == 'main': unittest.main(argv=['first-arg-is-ignored'], exit=False)
